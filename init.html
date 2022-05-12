@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>config command</title>
+    <style>
+        input,
+        textarea {
+            margin: 5px;
+            padding: 2px;
+            display: block;
+        }
+
+        input[type="text"] {
+            width: 300px;
+        }
+
+        textarea {
+            width: 400px;
+            border: 1px solid #999;
+        }
+
+        button {
+            margin: 5px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Git初期設定コマンド</h1>
+    <input type="text" id="name" placeholder="GitHubアカウント名">
+    <input type="text" id="mail" placeholder="メールアドレス">
+    <input type="button" value="設定コマンド生成" id="button">
+    <textarea readonly id="command"></textarea>
+    <button id="copy">コピー</button>
+
+    <script>
+        const $name = document.querySelector('#name')
+        const $mail = document.querySelector('#mail')
+        const $cmd = document.querySelector('#command')
+
+        document.querySelector('#button').addEventListener('click', () =>
+        {
+            const name = $name.value
+            const mail = $mail.value
+            if (name === "" && mail === "")
+            {
+                return;
+            }
+            $cmd.textContent = `git config --global user.name "${name}" && git config --global user.email "${mail}" && git config --global credential.helper osxkeychain`
+        })
+
+        document.querySelector('#copy').addEventListener('click', () =>
+        {
+            $cmd.select()
+            document.execCommand('copy')
+        })
+    </script>
+</body>
+</html>

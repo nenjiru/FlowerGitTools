@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>clone command</title>
+    <style>
+        input,
+        textarea {
+            margin: 5px;
+            padding: 2px;
+            display: block;
+        }
+
+        input[type="text"] {
+            width: 300px;
+        }
+
+        textarea {
+            width: 400px;
+            border: 1px solid #999;
+        }
+
+        button {
+            margin: 5px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>クローンコマンド</h1>
+    <input type="text" id="url" placeholder="GitHub URL">
+    <input type="button" value="クローンコマンド生成" id="button">
+    <textarea readonly id="command"></textarea>
+    <button id="copy">コピー</button>
+
+    <script>
+        const $url = document.querySelector('#url')
+        const $cmd = document.querySelector('#command')
+        const hasHttps = /^https:/
+        const hasGit = /\.git$/
+
+        document.querySelector('#button').addEventListener('click', () =>
+        {
+            const url = $url.value
+            if (url === "" || !hasHttps.test(url) || !hasGit.test(url))
+            {
+                $cmd.textContent = 'URLが正しくありません'
+                return;
+            }
+            $cmd.textContent = `git clone ${url}`
+        })
+
+        document.querySelector('#copy').addEventListener('click', () =>
+        {
+            $cmd.select()
+            document.execCommand('copy')
+        })
+    </script>
+</body>
+</html>
